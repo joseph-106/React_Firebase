@@ -12,7 +12,9 @@ const AppRouter = (props) => {
       <Switch>
         {props.isLoggedIn ? (
           <>
-            <Route exact path="/" component={Home} />
+            <Route exact path="/">
+              <Home userObj={props.userObj} />
+            </Route>
             <Route exact path="/profile" component={Profile} />
           </>
         ) : (

@@ -3,13 +3,15 @@ import AppRouter from "components/Router";
 import { authService } from "fbase";
 
 function App() {
-  const [init, setInit] = useState(false);
+  const [init, setInit] = useState(false); // 로딩 상태
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userObj, setUserObj] = useState(null);
   useEffect(() => {
     // 사용자 정보 변화 감지
     authService.onAuthStateChanged((user) => {
       if (user) {
         setIsLoggedIn(true);
+        setUserObj(user);
       } else {
         setIsLoggedIn(false);
       }
@@ -18,8 +20,11 @@ function App() {
   }, []);
   return (
     <>
-      {/* 사용자 정보 로딩 UI */}
-      {init ? <AppRouter isLoggedIn={isLoggedIn} /> : "Loading..."}
+      {init ? (
+        <AppRouter isLoggedIn={isLoggedIn} userObj={userObj} />
+      ) : (
+        "Loading..."
+      )}
       <footer>&copy; {new Date().getFullYear()} Firebase</footer>
     </>
   );
