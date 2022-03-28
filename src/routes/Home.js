@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { dbService } from "fbase";
+import Post from "components/Post";
 
 const Home = (props) => {
   const [post, setPost] = useState("");
@@ -42,9 +43,11 @@ const Home = (props) => {
       </form>
       <div>
         {posts.map((post) => (
-          <div key={post.id}>
-            <h4>{post.text}</h4>
-          </div>
+          <Post
+            key={post.id}
+            postObj={post}
+            isOwner={post.creatorId === props.userObj.uid}
+          />
         ))}
       </div>
     </div>
