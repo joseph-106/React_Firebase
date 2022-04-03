@@ -5,6 +5,7 @@ import Post from "components/Post";
 const Home = (props) => {
   const [post, setPost] = useState("");
   const [posts, setPosts] = useState([]);
+  const [attachment, setAttachment] = useState();
   useEffect(() => {
     dbService.collection("posts").onSnapshot((snapshot) => {
       const postArray = snapshot.docs.map((doc) => ({
@@ -29,6 +30,22 @@ const Home = (props) => {
     } = event;
     setPost(value);
   };
+  const onFileChange = (event) => {
+    const {
+      target: { files },
+    } = event;
+    const theFile = files[0];
+    const reader = new FileReader();
+    // 파일이 읽어지면 실행
+    reader.onloadend = (finishedEvent) => {
+      const {
+        currentTarget: { result },
+      } = finishedEvent;
+      setAttachment(result);
+    };
+    reader.readAsDataURL(theFile); // 파일을 읽기 시작
+  };
+  const onClearAttachment = () => setAttachment(null);
   return (
     <div>
       <form onSubmit={onSubmit}>
@@ -39,7 +56,14 @@ const Home = (props) => {
           placeholder="What's on your mind?"
           maxLength={120}
         />
+        <input type="file" accept="image/*" onChange={onFileChange} />
         <input type="submit" value="Post" />
+        {attachment && (
+          <div>
+            <img src={attachment} alt="preview" width="50px" height="50px" />
+            <button onClick={onClearAttachment}>Clear</button>
+          </div>
+        )}
       </form>
       <div>
         {posts.map((post) => (
