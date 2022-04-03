@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { dbService } from "fbase";
+import { v4 as uuidv4 } from "uuid";
+import { dbService, storageService } from "fbase";
 import Post from "components/Post";
 
 const Home = (props) => {
@@ -17,12 +18,17 @@ const Home = (props) => {
   }, []);
   const onSubmit = async (event) => {
     event.preventDefault();
-    await dbService.collection("posts").add({
+    const fileRef = storageService
+      .ref()
+      .child(`${props.userObj.uid}/${uuidv4()}`);
+    const response = await fileRef.putString(attachment, "data_url");
+    console.log(response);
+    /* await dbService.collection("posts").add({
       text: post,
       createdAt: Date.now(),
       creatorId: props.userObj.uid,
     });
-    setPost("");
+    setPost(""); */
   };
   const onChange = (event) => {
     const {
