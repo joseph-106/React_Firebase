@@ -6,7 +6,7 @@ import Post from "components/Post";
 const Home = (props) => {
   const [post, setPost] = useState("");
   const [posts, setPosts] = useState([]);
-  const [attachment, setAttachment] = useState();
+  const [attachment, setAttachment] = useState(null);
   useEffect(() => {
     dbService.collection("posts").onSnapshot((snapshot) => {
       const postArray = snapshot.docs.map((doc) => ({
@@ -18,17 +18,23 @@ const Home = (props) => {
   }, []);
   const onSubmit = async (event) => {
     event.preventDefault();
-    const fileRef = storageService
-      .ref()
-      .child(`${props.userObj.uid}/${uuidv4()}`);
-    const response = await fileRef.putString(attachment, "data_url");
-    console.log(response);
-    /* await dbService.collection("posts").add({
+    let attachmentUrl = "";
+    if (attachment !== null) {
+      const attachmentRef = storageService
+        .ref()
+        .child(`${props.userObj.uid}/${uuidv4()}`);
+      const response = await attachmentRef.putString(attachment, "data_url");
+      attachmentUrl = await response.ref.getDownloadURL();
+    }
+    const postObj = {
       text: post,
       createdAt: Date.now(),
       creatorId: props.userObj.uid,
-    });
-    setPost(""); */
+      attachmentUrl,
+    };
+    await dbService.collection("posts").add(postObj);
+    setPost("");
+    setAttachment(null);
   };
   const onChange = (event) => {
     const {

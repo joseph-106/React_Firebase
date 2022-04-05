@@ -41,6 +41,14 @@ const Post = (props) => {
       ) : (
         <>
           <h4>{props.postObj.text}</h4>
+          {props.postObj.attachmentUrl && (
+            <img
+              src={props.postObj.attachmentUrl}
+              alt="postImage"
+              width="50px"
+              height="50px"
+            />
+          )}
           {props.isOwner && (
             <>
               <button onClick={onDeleteClick}>Delete Post</button>
