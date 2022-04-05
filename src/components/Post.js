@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { dbService } from "fbase";
+import { dbService, storageService } from "fbase";
 
 const Post = (props) => {
   const [editing, setEditing] = useState(false);
@@ -8,6 +8,7 @@ const Post = (props) => {
     const ok = window.confirm("정말 삭제할까용?");
     if (ok) {
       await dbService.doc(`posts/${props.postObj.id}`).delete();
+      await storageService.refFromURL(props.postObj.attachmentUrl).delete();
     }
   };
   const toggleEditing = () => setEditing((prev) => !prev);
