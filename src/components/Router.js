@@ -16,7 +16,10 @@ const AppRouter = (props) => {
               <Home userObj={props.userObj} />
             </Route>
             <Route exact path="/profile">
-              <Profile userObj={props.userObj} />
+              <Profile
+                userObj={props.userObj}
+                refreshUser={props.refreshUser}
+              />
             </Route>
           </>
         ) : (

@@ -35,6 +35,7 @@ const Profile = (props) => {
       await props.userObj.updateProfile({
         displayName: newDisplayName,
       });
+      props.refreshUser();
     }
   };
   return (
