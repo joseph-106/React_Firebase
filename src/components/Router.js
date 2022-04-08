@@ -15,7 +15,9 @@ const AppRouter = (props) => {
             <Route exact path="/">
               <Home userObj={props.userObj} />
             </Route>
-            <Route exact path="/profile" component={Profile} />
+            <Route exact path="/profile">
+              <Profile userObj={props.userObj} />
+            </Route>
           </>
         ) : (
           <>
