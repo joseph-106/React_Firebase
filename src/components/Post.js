@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { dbService, storageService } from "fbase";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 const Post = (props) => {
   const [editing, setEditing] = useState(false);
@@ -24,37 +26,40 @@ const Post = (props) => {
     setNewPost(value);
   };
   return (
-    <div>
+    <div className="post">
       {editing ? (
         <>
-          <form onSubmit={onSubmit}>
+          <form onSubmit={onSubmit} className="container postEdit">
             <input
               value={newPost}
               onChange={onChange}
               type="text"
               placeholder="Edit your post"
               required
+              autoFocus
+              className="formInput"
             />
-            <input type="submit" value="Update" />
+            <input type="submit" value="Update" className="formBtn" />
           </form>
-          <button onClick={toggleEditing}>Cancel</button>
+          <span onClick={toggleEditing} className="formBtn cancelBtn">
+            Cancel
+          </span>
         </>
       ) : (
         <>
           <h4>{props.postObj.text}</h4>
           {props.postObj.attachmentUrl && (
-            <img
-              src={props.postObj.attachmentUrl}
-              alt="postImage"
-              width="50px"
-              height="50px"
-            />
+            <img alt="postImage" src={props.postObj.attachmentUrl} />
           )}
           {props.isOwner && (
-            <>
-              <button onClick={onDeleteClick}>Delete Post</button>
-              <button onClick={toggleEditing}>Update Post</button>
-            </>
+            <div className="post__actions">
+              <span onClick={onDeleteClick}>
+                <FontAwesomeIcon icon={faTrash} />
+              </span>
+              <span onClick={toggleEditing}>
+                <FontAwesomeIcon icon={faPencilAlt} />
+              </span>
+            </div>
           )}
         </>
       )}

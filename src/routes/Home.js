@@ -15,9 +15,9 @@ const Home = (props) => {
     });
   }, []);
   return (
-    <div>
+    <div className="container">
       <PostFactory userObj={props.userObj} />
-      <div>
+      <div style={{ marginTop: 30 }}>
         {posts.map((post) => (
           <Post
             key={post.id}
