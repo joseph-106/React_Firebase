@@ -6,13 +6,16 @@ import PostFactory from "components/PostFactory";
 const Home = (props) => {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    dbService.collection("posts").onSnapshot((snapshot) => {
-      const postArray = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setPosts(postArray);
-    });
+    dbService
+      .collection("posts")
+      .orderBy("createdAt", "desc")
+      .onSnapshot((snapshot) => {
+        const postArray = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setPosts(postArray);
+      });
   }, []);
   return (
     <div className="container">
