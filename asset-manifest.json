@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/React_Firebase/static/css/main.5f62c045.css",
-    "main.js": "/React_Firebase/static/js/main.d544ad6c.js",
+    "main.js": "/React_Firebase/static/js/main.901a9fc7.js",
     "index.html": "/React_Firebase/index.html",
     "main.5f62c045.css.map": "/React_Firebase/static/css/main.5f62c045.css.map",
-    "main.d544ad6c.js.map": "/React_Firebase/static/js/main.d544ad6c.js.map"
+    "main.901a9fc7.js.map": "/React_Firebase/static/js/main.901a9fc7.js.map"
   },
   "entrypoints": [
     "static/css/main.5f62c045.css",
-    "static/js/main.d544ad6c.js"
+    "static/js/main.901a9fc7.js"
   ]
 }
